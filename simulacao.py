@@ -105,3 +105,4 @@ df_resultado.set_index("Fase", inplace=True)
 df_selecao = df_resultado[['Receita Assinaturas (R$)' , "Valor Total da Remuneração (R$)"]]
 st.line_chart(df_selecao)
 
+# fim do arquivo
