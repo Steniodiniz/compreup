@@ -8,8 +8,10 @@ st.set_page_config(page_title="CompreUp - Modelo de Negócio", layout="wide")
 st.sidebar.header("🛠️ Simulador de Escala")
 st.sidebar.markdown("Ajuste os valores para projetar o cenário financeiro.")
 
-num_clientes = st.sidebar.slider("Quantidade de Clientes", min_value=1, max_value=15000, value=1160)
+# num_clientes = st.sidebar.slider("Quantidade de Clientes", min_value=1, max_value=15000, value=1160)
 ticket_mensal = st.sidebar.number_input("Valor da Assinatura (R$)", value=600.0)
+num_clientes = st.sidebar.number("Quantidade de Clientes", min_value=1)
+
 
 # Cálculos do Simulador
 receita_mensal = num_clientes * ticket_mensal
