@@ -10,7 +10,7 @@ st.sidebar.markdown("Ajuste os valores para projetar o cenário financeiro.")
 
 # Input de quantidade de clientes baseado no potencial de mercado [cite: 51, 54]
 num_clientes = st.sidebar.slider("Quantidade de Clientes", min_value=1, max_value=15000, value=1000)
-ticket_mensal = st.sidebar.number_input("Valor da Assinatura (R$)", value=600.00) [cite: 64]
+ticket_mensal = st.sidebar.number_input("Valor da Assinatura (R$) [cite: 64]", value=600.00) 
 
 # Cálculos do Simulador [cite: 68, 69, 70, 71]
 receita_mensal = num_clientes * ticket_mensal
