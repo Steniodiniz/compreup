@@ -50,7 +50,7 @@ m1, m2, m3, m4 = st.columns(4)
 m1.metric("Receita Bruta Mensal", f"R$ {receita_mensal:,.2f}")
 m2.metric("Impostos (6%)", f"- R$ {impostos:,.2f}")
 m3.metric("Custos (Var/Fixos)", f"- R$ {(custos_variaveis + custos_fixos):,.2f}")
-m4.metric("Lucro Operacional", f"R$ {lucro_operacional:,.2f}", delta="69% de Margem") [cite: 71]
+m4.metric("Lucro Operacional", f"R$ {lucro_operacional:,.2f}", delta="69% de Margem") 
 
 # Gráfico do Simulador
 st.subheader("Visualização de Receita vs. Custos")
@@ -66,7 +66,7 @@ st.markdown("---")
 st.header("3. Estrutura de Custos e Eficiência")
 dados_custos = {
     "Categoria": ["Impostos (Simples Nacional)", "Custos Variáveis", "Custos Fixos", "Margem Operacional"],
-    "Percentual": [6, 10, 15, 69] [cite: 68, 69, 70, 71]
+    "Percentual": [6, 10, 15, 69]
 }
 df_custos = pd.DataFrame(dados_custos)
 
