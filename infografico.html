@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompreUp - Análise Estratégica de Negócio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Palette Selection: "Energetic Professional" 
+         Primary Blue: #1E3A8A (Trust/Corporate)
+         Vibrant Green: #10B981 (Growth/Profit/Success)
+         Accent Orange: #F59E0B (Opportunity/Highlight)
+         Background: #F3F4F6
+    -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1E3A8A',
+                            lightBlue: '#3B82F6',
+                            green: '#10B981',
+                            orange: '#F59E0B',
+                            dark: '#111827',
+                            gray: '#F3F4F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F3F4F6;
+            color: #111827;
+        }
+        
+        /* Chart Container Styling Rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Base height */
+            max-height: 400px;
+        }
+
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Utility for flow diagrams */
+        .flow-arrow::after {
+            content: '▼';
+            font-size: 1.5rem;
+            color: #9CA3AF;
+            display: block;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .flow-arrow-right::after {
+                content: '▶';
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }
+    </style>
+    
+    <!-- 
+    HTML COMMENTS SUMMARY:
+    
+    1. Narrative Plan:
+       - Introduction: Hook on the inefficiency of the B2B food market.
+       - Market Context: Visualize the massive TAM and fragmentation using Big Numbers and Donut Chart.
+       - Cultural Challenge (NEW): Highlight the resistance to change and empirical management style.
+       - The Solution: Contrast the Traditional Model vs. CompreUp Model (SaaS) using a Flow Diagram and Bar Chart for savings.
+       - Competitive Landscape: Radar Chart to visualize the "Blue Ocean" strategy (Transparency/Data).
+       - Financials: ROI Line Chart and Cost Structure breakdown.
+       - Conclusion: Strategic Summary.
+    -->
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-brand-blue text-white py-12 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">CompreUp</h1>
+            <h2 class="text-xl md:text-2xl font-light text-blue-200">Revolução B2B no Setor de Alimentação</h2>
+            <div class="mt-8 max-w-3xl mx-auto">
+                <p class="text-lg text-blue-100">
+                    Transformando a ineficiência de compras de PMEs em vantagem competitiva através de transparência radical, dados estratégicos e compras colaborativas.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+
+        <!-- SECTION 1: MARKET CONTEXT -->
+        <section>
+            <div class="mb-6 border-l-4 border-brand-orange pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">O Tamanho da Oportunidade</h3>
+                <p class="text-gray-600 mt-2">
+                    O mercado brasileiro de alimentação é vasto e pulverizado. Pequenos negócios sofrem com baixo poder de barganha e gestão empírica, criando um oceano de oportunidades para digitalização e eficiência.
+                </p>
+            </div>
+
+            <!-- Big Numbers Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card border-t-4 border-brand-blue text-center">
+                    <div class="text-4xl font-bold text-brand-blue mb-2">1,16 Mi</div>
+                    <div class="text-sm text-gray-500 uppercase font-semibold">Clientes Potenciais B2B</div>
+                </div>
+                <div class="card border-t-4 border-brand-green text-center">
+                    <div class="text-4xl font-bold text-brand-green mb-2">R$ 83 Mi</div>
+                    <div class="text-sm text-gray-500 uppercase font-semibold">TAM Inicial (Assinaturas)</div>
+                </div>
+                <div class="card border-t-4 border-brand-orange text-center">
+                    <div class="text-4xl font-bold text-brand-orange mb-2">R$ 7,2k</div>
+                    <div class="text-sm text-gray-500 uppercase font-semibold">Ticket Médio Anual</div>
+                </div>
+            </div>
+
+            <!-- Market Segmentation Chart -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
+                <div class="card">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">Segmentação do Mercado Alvo</h4>
+                    <div class="chart-container">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-4">Fonte: Estimativa baseada em dados ABIA/Sebrae</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
+                        <h5 class="font-bold text-blue-900">Restaurantes & Food Service</h5>
+                        <p class="text-sm text-gray-600">O maior volume (~1 milhão). Alta frequência de compra e alta sensibilidade a preço e qualidade.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                        <h5 class="font-bold text-green-900">Mercados de Bairro</h5>
+                        <p class="text-sm text-gray-600">~90 mil estabelecimentos. Necessidade crítica de mix variado e reposição ágil.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-orange-500">
+                        <h5 class="font-bold text-orange-900">Padarias</h5>
+                        <p class="text-sm text-gray-600">~70 mil estabelecimentos. Foco em commodities (farinha, ovos) onde a CompreUp atua inicialmente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: CULTURAL CHALLENGE -->
+            <div class="bg-gray-100 rounded-xl p-6 border border-gray-200">
+                <div class="mb-4">
+                    <h4 class="text-xl font-bold text-brand-dark flex items-center gap-2">
+                        <span class="text-brand-orange text-2xl">⚠️</span> O Fator Humano: Desafios Culturais
+                    </h4>
+                    <p class="text-gray-600 mt-2 text-sm">
+                        A maior barreira de entrada não é tecnológica, mas comportamental. O empresário PME brasileiro opera historicamente na informalidade e na reação imediata. A CompreUp precisa vencer a "cultura do caderninho" e a resistência a custos fixos.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container" style="max-height: 250px;">
+                        <canvas id="cultureChart"></canvas>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="font-bold text-2xl text-brand-orange">1.</div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Mentalidade Imediatista</h5>
+                                <p class="text-xs text-gray-600">Foco excessivo no "preço do dia" em detrimento do planejamento de longo prazo e gestão de estoque.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="font-bold text-2xl text-brand-blue">2.</div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Aversão à Assinatura</h5>
+                                <p class="text-xs text-gray-600">Resistência cultural a assumir custos fixos mensais (SaaS) sem percepção imediata e tangível de retorno.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="font-bold text-2xl text-brand-green">3.</div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Gestão Empírica</h5>
+                                <p class="text-xs text-gray-600">Decisões baseadas em "feeling" (olhômetro) em vez de dados, dificultando a percepção de valor da inteligência de mercado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE MODEL SHIFT -->
+        <section>
+            <div class="mb-6 border-l-4 border-brand-green pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">A Inovação do Modelo de Negócio</h3>
+                <p class="text-gray-600 mt-2">
+                    Diferente dos marketplaces tradicionais que vivem de comissões (conflito de interesse), a CompreUp adota um modelo SaaS + Transparência Radical. A comissão vira desconto, e a receita vem da inteligência.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- HTML Diagram: Traditional vs CompreUp -->
+                <div class="card bg-gray-50">
+                    <h4 class="text-lg font-bold text-gray-800 mb-6 text-center">Fluxo de Valor</h4>
+                    
+                    <!-- Traditional Flow -->
+                    <div class="mb-8">
+                        <div class="text-xs font-bold text-gray-400 uppercase mb-2">Modelo Tradicional</div>
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-2">
+                            <div class="bg-gray-200 p-3 rounded text-center w-full md:w-1/3">
+                                <div class="font-bold text-gray-700">Fornecedor</div>
+                            </div>
+                            <div class="text-2xl text-red-500 font-bold">→</div>
+                            <div class="bg-red-50 border border-red-200 p-3 rounded text-center w-full md:w-1/3 relative">
+                                <div class="font-bold text-red-700">Intermediário</div>
+                                <div class="text-xs text-red-500">Retém Comissão</div>
+                            </div>
+                            <div class="text-2xl text-gray-400 font-bold">→</div>
+                            <div class="bg-gray-200 p-3 rounded text-center w-full md:w-1/3">
+                                <div class="font-bold text-gray-700">Comprador</div>
+                                <div class="text-xs text-gray-500">Paga Preço Cheio</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CompreUp Flow -->
+                    <div>
+                        <div class="text-xs font-bold text-brand-green uppercase mb-2">Modelo CompreUp</div>
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-2">
+                            <div class="bg-blue-100 p-3 rounded text-center w-full md:w-1/3">
+                                <div class="font-bold text-brand-blue">Fornecedor</div>
+                            </div>
+                            <div class="text-2xl text-brand-green font-bold">→</div>
+                            <div class="bg-green-50 border border-green-200 p-3 rounded text-center w-full md:w-1/3 relative shadow-md">
+                                <div class="font-bold text-brand-green">CompreUp</div>
+                                <div class="text-xs text-brand-green font-bold">Repassa Desconto Total</div>
+                            </div>
+                            <div class="text-2xl text-brand-green font-bold">→</div>
+                            <div class="bg-blue-100 p-3 rounded text-center w-full md:w-1/3">
+                                <div class="font-bold text-brand-blue">Comprador</div>
+                                <div class="text-xs text-brand-blue font-bold">Paga Assinatura Fixa</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Savings Logic Chart -->
+                <div class="card">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">Matemática da Economia Mensal (Exemplo)</h4>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center text-sm text-gray-600">
+                        <span class="font-bold text-brand-green">ROI Imediato:</span> A economia gerada supera o custo da assinatura, gerando lucro líquido operacional.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: COMPETITIVE LANDSCAPE -->
+        <section>
+            <div class="mb-6 border-l-4 border-brand-blue pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Panorama Competitivo</h3>
+                <p class="text-gray-600 mt-2">
+                    A CompreUp se posiciona em um "Oceano Azul" de alta transparência e inteligência de dados, diferenciando-se tanto da ineficiência do atacarejo físico quanto da opacidade dos marketplaces tradicionais.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Radar Chart -->
+                <div class="card md:col-span-2">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">Matriz de Diferenciação</h4>
+                    <div class="chart-container" style="max-height: 400px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Competitor Analysis Text -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow border-t-4 border-orange-500">
+                        <h5 class="font-bold text-gray-800">Atacarejo Físico</h5>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Assaí, Atacadão</p>
+                        <p class="text-sm text-gray-600">Forte em preço, mas exige alto esforço do cliente (deslocamento) e oferece zero inteligência de dados.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow border-t-4 border-blue-400">
+                        <h5 class="font-bold text-gray-800">Startups Tech</h5>
+                        <p class="text-xs text-gray-500 uppercase mb-1">Cayena, Frubana</p>
+                        <p class="text-sm text-gray-600">Oferecem conveniência digital, mas cobram comissões ocultas e priorizam a logística em vez da gestão do cliente.</p>
+                    </div>
+                    <div class="bg-brand-blue p-4 rounded-lg shadow text-white">
+                        <h5 class="font-bold text-white">CompreUp</h5>
+                        <p class="text-xs text-blue-200 uppercase mb-1">Nosso Posicionamento</p>
+                        <p class="text-sm text-blue-100">Líder em Transparência e Alinhamento. O único player que atua como parceiro estratégico de compras, não apenas vendedor.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: FINANCIALS & STRATEGY -->
+        <section>
+            <div class="mb-6 border-l-4 border-brand-orange pl-4">
+                <h3 class="text-2xl font-bold text-brand-dark">Viabilidade & Futuro</h3>
+                <p class="text-gray-600 mt-2">
+                    Com uma estrutura Asset-Light e receita recorrente, o modelo projeta sustentabilidade rápida e alto retorno sobre investimento.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Financial Projection Chart -->
+                <div class="card">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">Projeção de Retorno (ROI) Acumulado</h4>
+                    <div class="chart-container">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-2">Payback estimado em ~1.6 anos</p>
+                </div>
+
+                <!-- Strategic Summary (Grid) -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow flex flex-col items-center justify-center text-center">
+                        <div class="text-brand-green font-bold text-xl mb-1">Asset-Light</div>
+                        <p class="text-xs text-gray-500">Sem estoque próprio. Menor risco de queima de caixa.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex flex-col items-center justify-center text-center">
+                        <div class="text-brand-blue font-bold text-xl mb-1">Recorrência</div>
+                        <p class="text-xs text-gray-500">Modelo de Assinatura gera previsibilidade (MRR).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex flex-col items-center justify-center text-center">
+                        <div class="text-brand-orange font-bold text-xl mb-1">Data-Driven</div>
+                        <p class="text-xs text-gray-500">Dados de compra viram produto de inteligência.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow flex flex-col items-center justify-center text-center">
+                        <div class="text-gray-800 font-bold text-xl mb-1">Escalabilidade</div>
+                        <p class="text-xs text-gray-500">Plataforma digital pronta para expansão nacional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-sm text-gray-400">© 2026 CompreUp Tecnologia em Compras B2B.</p>
+            <p class="text-xs text-gray-600 mt-2">Documento confidencial para fins estratégicos.</p>
+        </div>
+    </footer>
+
+    <!-- Chart Logic Scripts -->
+    <script>
+        // --- 1. Label Wrapping Utility (Mandatory) ---
+        function wrapLabel(str, maxChars) {
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= maxChars) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- 2. Tooltip Configuration (Mandatory) ---
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: commonTooltipConfig,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: { family: 'Inter', size: 12 },
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                }
+            }
+        };
+
+        // --- 3. Market Segmentation Chart (Doughnut) ---
+        const ctxMarket = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctxMarket, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    wrapLabel('Restaurantes e Food Service', 16),
+                    wrapLabel('Mercados de Bairro', 16),
+                    wrapLabel('Padarias', 16)
+                ],
+                datasets: [{
+                    data: [1000000, 90000, 70000],
+                    backgroundColor: ['#3B82F6', '#10B981', '#F59E0B'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                cutout: '60%',
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // --- NEW: Cultural Challenge Chart (Horizontal Bar) ---
+        const ctxCulture = document.getElementById('cultureChart').getContext('2d');
+        new Chart(ctxCulture, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Mentalidade Imediatista (Preço)', 20),
+                    wrapLabel('Resistência a Custos Fixos', 20),
+                    wrapLabel('Gestão Empírica (Sem Dados)', 20),
+                    wrapLabel('Desconfiança Digital', 20)
+                ],
+                datasets: [{
+                    label: 'Nível de Resistência (%)',
+                    data: [85, 75, 60, 45],
+                    backgroundColor: [
+                        '#F59E0B', // Orange (High Alert)
+                        '#F59E0B', 
+                        '#3B82F6', // Blue (Medium)
+                        '#10B981'  // Green (Low)
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                indexAxis: 'y', // Horizontal bars
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'Intensidade da Barreira' }
+                    }
+                },
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    legend: { display: false } // Hide legend as colors explain intensity or labels do
+                }
+            }
+        });
+
+        // --- 4. Savings Logic Chart (Bar - Before/After) ---
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'bar',
+            data: {
+                labels: [wrapLabel('Custo Mensal de Insumos', 16)],
+                datasets: [
+                    {
+                        label: 'Modelo Tradicional',
+                        data: [20000],
+                        backgroundColor: '#9CA3AF',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Modelo CompreUp (Custo do Produto)',
+                        data: [18000], // 10% saving assumption
+                        backgroundColor: '#10B981',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Assinatura CompreUp',
+                        data: [600],
+                        backgroundColor: '#1E3A8A',
+                        borderRadius: 4,
+                        // This dataset is conceptually separate but shown for comparison
+                        stack: 'CompreUp' // Stack with the CompreUp Cost to show total
+                    }
+                ]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    x: { stacked: false }, // Group bars separately
+                    y: { 
+                        beginAtZero: true,
+                        title: { display: true, text: 'Valor em R$' },
+                        stacked: false
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig,
+                    legend: { position: 'bottom' },
+                    annotation: {
+                        annotations: {
+                            label1: {
+                                type: 'label',
+                                content: 'Economia Líquida: R$ 1.400',
+                                color: 'green',
+                                position: 'center'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- 5. Competitive Landscape (Radar) ---
+        const ctxRadar = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: [
+                    wrapLabel('Preço Competitivo', 16),
+                    wrapLabel('Transparência', 16),
+                    wrapLabel('Inteligência de Dados', 16),
+                    wrapLabel('Alinhamento com Cliente', 16),
+                    wrapLabel('Conveniência', 16)
+                ],
+                datasets: [{
+                    label: 'CompreUp',
+                    data: [9, 10, 10, 10, 8],
+                    fill: true,
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)', // Brand Green transparent
+                    borderColor: '#10B981',
+                    pointBackgroundColor: '#10B981',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#10B981'
+                }, {
+                    label: 'Atacarejo Físico',
+                    data: [8, 2, 1, 5, 2],
+                    fill: true,
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)', // Orange transparent
+                    borderColor: '#F59E0B',
+                    pointBackgroundColor: '#F59E0B',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#F59E0B'
+                }, {
+                    label: 'Startups Tech',
+                    data: [7, 6, 7, 4, 9],
+                    fill: true,
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)', // Blue transparent
+                    borderColor: '#3B82F6',
+                    pointBackgroundColor: '#3B82F6',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#3B82F6'
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: '#E5E7EB' },
+                        grid: { color: '#E5E7EB' },
+                        pointLabels: {
+                            font: { family: 'Inter', size: 12, weight: '600' },
+                            color: '#374151'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                }
+            }
+        });
+
+        // --- 6. Financial ROI (Line) ---
+        const ctxFinance = document.getElementById('financialChart').getContext('2d');
+        new Chart(ctxFinance, {
+            type: 'line',
+            data: {
+                labels: ['Ano 0', 'Ano 1', 'Ano 2', 'Ano 3', 'Ano 4', 'Ano 5'],
+                datasets: [{
+                    label: 'ROI Acumulado (%)',
+                    data: [-100, -20, 50, 150, 300, 496],
+                    fill: true,
+                    borderColor: '#1E3A8A',
+                    backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    y: {
+                        title: { display: true, text: 'Retorno sobre Investimento (%)' },
+                        grid: { color: '#E5E7EB' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
